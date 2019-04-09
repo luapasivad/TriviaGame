@@ -1,0 +1,12 @@
+body {
+    color: 	#1bff80;
+}
+
+#content {
+    background-color: black;
+    border: 2px solid #1bff80;
+}
+
+.answerHover:hover {
+    border: 2px solid #1bff80;
+}
