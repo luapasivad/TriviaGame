@@ -52,8 +52,8 @@ body {
   
   /* The typing effect */
   @keyframes typing {
-    from { width: 0; float:left; }
-    to { width: 100%; float:left; }
+    from { width: 0; float:left }
+    to { width: 100%; float:left }
   }
   
   /* The typewriter cursor effect */
