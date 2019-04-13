@@ -1,6 +1,7 @@
 body {
     color: 	#1bff80;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: black;
 }
 
 
@@ -17,6 +18,12 @@ body {
 
 .answerWrong, .answerWrong:hover {
     background-color: #E50000;
+    color: black;
+}
+
+.answerRight:hover {
+    background-color: white;
+    color: black;
 }
 
 #haze {
@@ -38,7 +45,9 @@ body {
     margin-right: 15px;
 }
 
-
+#user {
+    display: inline
+}
 
 .typewriter {
     overflow: hidden;
@@ -46,7 +55,7 @@ body {
     white-space: nowrap;
     margin: 0 auto; 
     animation: 
-      typing 4s steps(40, start),
+      typing 1s steps(40, start),
       blink-caret .75s step-start infinite;
   }
   
@@ -66,4 +75,10 @@ body {
       font-size: 45px;
       padding-top: 85%;
       padding-left: 30%;
+  }
+
+  @media only screen and (max-width: 600px) {
+    #display {
+      display: none;
+    }
   }

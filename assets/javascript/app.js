@@ -11,72 +11,89 @@ $(document).ready(function() {
         wrong = 0 // wrong asnwers score
         right = 0 // right answers score
         time = 0 // time tracker
-        timer;
+        timer; // timer variable
 
 
     questionAnswer = { // object full of Q and A values
         '1' : {
-            question: "this is a very very long question 1",
-            answer: ">  this is the answer",
-            wrong1: ">  this is not 1.1",
-            wrong2: ">  this is not 1.2",
-            wrong3: ">  this is not 1.3",
+            question: "What is fallout?",
+            answer: ">  radioactive particles in the air after a nuclear explosion",
+            wrong1: ">  Chinese nationals defecting from the United States",
+            wrong2: ">  armament dropped by aircraft",
+            wrong3: ">  VAULT-TEC proproetary protection product",
         },
         '2' : {
-            question: "this is a question 2",
-            answer: "> this is the answer",
-            wrong1: "> this is not 2.1",
-            wrong2: "> this is not 2.2",
-            wrong3: "> this is not 2.3",
+            question: "Select your best defense from post-nuclear fallout.",
+            answer: "> VAULT-TEC vault",
+            wrong1: "> local grocery store",
+            wrong2: "> basement",
+            wrong3: "> nearest fallout shelter",
         },
         '3' : {
-            question: "this is a question 3",
-            answer: "> this is the answer",
-            wrong1: "> this is not 3.1",
-            wrong2: "> this is not 3.2",
-            wrong3: "> this is not 3.3",
+            question: "Define V.A.T.S",
+            answer: "> VAULT-TEC Assisted Targeting System",
+            wrong1: "> Visually Apt Technical Service",
+            wrong2: "> Versatile Armored Tent Setup",
+            wrong3: "> Verified Army Trainee Support",
         },
         '4' : {
-            question: "this is a question 4",
-            answer: "> this is the answer",
-            wrong1: "> this is not 4.1",
-            wrong2: "> this is not 4.2",
-            wrong3: "> this is not 4.3",
+            question: "Which is not a sign of radiation poisoning?",
+            answer: "> runny nose",
+            wrong1: "> nausea",
+            wrong2: "> shortness of breath",
+            wrong3: "> death",
         },
         '5' : {
-            question: "this is a question 5",
-            answer: "> this is the answer",
-            wrong1: "> this is not 5.1",
-            wrong2: "> this is not 5.2",
-            wrong3: "> this is not 5.3",
+            question: "Have you reserved your spot in a VAULT-TEC vault?",
+            answer: "> Yes! I'm prepared for total nuclear annhialation!",
+            wrong1: "> No! I do not value my safety!",
+            wrong2: "> No! My families security is worthless!",
+            wrong3: "> No! I am incompetent!",
         }   
     }
+    //click to start
+    login()
 
-    //this function gives us a random number to place the answer
-    function randomizer() {
-    return Math.floor((Math.random()*4))
+    function login() {
+        question.text('VAULT-TEC Post-Annihalation Apptitude Test').addClass('typewriter').appendTo(question)
+        setTimeout(function() {answer1Div.removeClass('hidden').text('.... retrieving question data ....')}, 2000)
+        setTimeout(function() {answer2Div.removeClass('hidden').text('.... retrieving answer data ....')}, 3500)
+        setTimeout(function() {answer3Div.removeClass('hidden').text('.... loading display .... ')}, 5000)
+        setTimeout(function() {
+            answer4Div.removeClass('hidden').text(' > ready - click anywhere to begin <'); 
+            $(document).one().click(function() {  
+                question.removeClass('typewriter')
+                setTimeout(function() {start()}, 1000)
+            })}, 6500)
+        
+        
     }
 
-    //click to start
-    $(document).one().click(function() { start() })
-
     function start() {
+
+        dump()
+        answer.addClass('hidden')
+        
         q=1
         $(document).off('click') // click to start off on start
         answer.addClass('answerHover') // add green hover to answer on start
         question.addClass('typewriter') // add typewriter to question on start
         setTimeout(function() {
             answer.removeClass('hidden') // unhide questions after typing question
-        }, 4500)
+        }, 2500)
         setUp() // run setup function
     }
 
+    //this function gives us a random number to place the answer
+    function randomizer() {
+        return Math.floor((Math.random()*4))
+    }
 
     function setUp() {
-        timerFunc()
+        timerFunc() // start timer
 
         setTimeout(function() {
-            answer.removeClass('hidden') }, 4500) // load in answers after typing animation
+            answer.removeClass('hidden') }, 2500) // load in answers after typing animation
 
         question.text(questionAnswer[q].question) // question 
         optionDisplayArr = [answer1Div, answer2Div, answer3Div, answer4Div] // array holding the div info for text
@@ -87,6 +104,7 @@ $(document).ready(function() {
         // answer is not displayed in the game
         w = 0
 
+        //fills in the wrong answers around the correct answer
         for (let i=0; i<optionDisplayArr.length; i++) {
             if (optionDisplayArr[i].text().length < 1) {
                 wrongArr = [questionAnswer[q].wrong1, questionAnswer[q].wrong2, questionAnswer[q].wrong3] // array holding the 3 wrong answers for the setUp() function
@@ -98,18 +116,18 @@ $(document).ready(function() {
     // on click function for selection
     answer.one().click(function() {
         answer.off('click')// when clicked, click selectors turn off
-        question.removeClass('typewriter')
+        question.removeClass('typewriter')// remove effect
         if ($(event.target).text() === correctAnswer.text()) { // if it's the correct answer
-            display.text('CORRECT')
+            display.text('CORRECT') // display correct
+            $(event.target).addClass('answerRight')
             console.log('right') // alert
             right++ // counter
             q++ // question #
             clearInterval(timer) // timer pause
-            setTimeout(function() {softReset()} , 2000) // reset for next quesiton
+            setTimeout(function() {softReset()} , 2000) // question reset
         } else { // if its not right
-            answer.off('click')
-            display.text('WRONG')
-            $(event.target).addClass('answerWrong')
+            display.text('WRONG') // display wrong
+            $(event.target).addClass('answerWrong') // highlight ref
             console.log('wrong')// alert
             wrong++ // counter
             q++ // question #
@@ -124,13 +142,15 @@ $(document).ready(function() {
         timer = setInterval(function() { 
             time++;  
             if (time >= 30) {//if time runs out
-            console.log('you lose')
-            clearInterval(timer)
-            gameOver()
+                question.removeClass('typewriter').empty()
+                console.log('you lose')
+                clearInterval(timer)
+                answer.addClass('hidden')
+                setTimeout(function() {gameOver()}, 1000)
         };
 
             //test time
-        $('#timer').html(30 - time); }, 200)  
+        $('#timer').html(30 - time); }, 1000)  
     }
     
     //reset for in between questions
@@ -138,72 +158,76 @@ $(document).ready(function() {
         w = 0
         time = 0
 
-        question.empty()
-        answer1Div.empty()
-        answer2Div.empty()
-        answer3Div.empty()
-        answer4Div.empty()
-        display.empty()
+        dump()
         answer.addClass('hidden')
         answer.removeClass('answerWrong')
-        if (q <= 5) {
+        answer.removeClass('answerRight')
+        if (q <= 5) { // if there are questions left,
             setTimeout(setUp(), 3000)
             question.addClass('typewriter')
-        } else {
+        } else { // if there are no questions left
             setTimeout(gameOver(), 3000)
         }
     }
 
+    // game over screen
     function gameOver() {
 
-        question.empty()
-        answer1Div.empty()
-        answer2Div.empty()
-        answer3Div.empty()
-        answer4Div.empty()
-        display.empty()
+        dump()
 
         question.addClass('typewriter') // typewriter "game over"
-        setTimeout(function() { answer.removeClass('hidden') }, 4500) // show score
+        setTimeout(function() { answer.removeClass('hidden') }, 2500) // delay info show
         $('<div>').text('---- GAME OVER ----').appendTo(question);
-        if (time >= 30) {
-            $('<div>').text('> session expired - timeout').appendTo(answer1Div)
+        
+        if (time >= 30) { // if game over due to time
+            $('<div>').text('> session expired - timeout').appendTo(answer1Div) // show timeout
+        } else { // if game over due to running out of questions
+            $('<div>').text('> questions correct: ' + right).appendTo(answer1Div) // score
+            $('<div>').text('> questions missed: ' + wrong).appendTo(answer2Div) }
 
-        } else {
-        $('<div>').text('> questions correct: ' + right).appendTo(answer1Div)
-        $('<div>').text('> questions missed: ' + wrong).appendTo(answer2Div) }
-
-        $(answer).off('click')
-        answer.removeClass('answerHover')
-        $('<div>').text('Try again?').appendTo(answer3Div)
-        $('<div class="tryAgain yes answerHover d-inline-block">').text('Y').appendTo(answer4Div)
-        $('<div class="tryAgain no answerHover d-inline-block">').text('N').appendTo(answer4Div)
-        $('.no').on('click', function() {
-            $(document).off('click')
+        $(answer).off('click') // turn off click for answers
+        answer.removeClass('answerHover') // remove answer hover
+        $('<div>').text('Try again?').appendTo(answer3Div) // repurpose div
+        $('<div class="tryAgain yes answerHover d-inline-block">').text('Y').appendTo(answer4Div) // yes select
+        $('<div class="tryAgain no answerHover d-inline-block">').text('N').appendTo(answer4Div) // no select
+        $('.no').one('click', function() { // if yes is clicked
+            $(document).off('click') // turn off any click function
+            lockOut()
             console.log('no')
         })
-        $('.yes').on('click', function() {
-            $(document).off('click')
-            hardReset()
+        $('.yes').one('click', function() { // if no is clicked
+            $(document).off('click') // turn off any click function
+            hardReset() // run the reset and start over
             console.log('yes')
         }) 
     }
 
-    function hardReset() {
+    function hardReset() { // reset for a new game
         w=0
         wrong=0
-        right=0
+        right=0 // all tracking global variables to 0
         time=0
 
+        dump()
+        answer.addClass('hidden') // hide answer div for animation
+        question.removeClass('typewriter') // remove for animation
+        answer.off('click') // no answer click
+        setTimeout(function() {start()}, 1000)
+    }
+
+    function lockOut() {
+        dump()
+        $('<div>').text('---- USER LOCKOUT ----').appendTo(question);
+        $('<div>').text('please contact an administrator').appendTo(answer1Div);
+
+    }
+
+    function dump() {
         question.empty()
-        answer1Div.empty()
+        answer1Div.empty() // empty all divs
         answer2Div.empty()
         answer3Div.empty()
         answer4Div.empty()
         display.empty()
-        answer.addClass('hidden')
-        answer.removeClass('answerWrong')
-        answer.off('click')
-        setTimeout(start(), 5000)
     }
 })
