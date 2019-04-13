@@ -2,13 +2,13 @@ body {
     color: 	#1bff80;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-color: black;
-    cursor: pointer;
 }
 
 
 #content {
     background-color: #001a00;
     border: 2px solid #18E573;
+    cursor: pointer;
 }
 
 .answerHover:hover, .answerCorrect {

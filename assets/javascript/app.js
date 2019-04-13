@@ -44,10 +44,10 @@ $(document).ready(function() {
             wrong3: "> death",
         },
         '5' : {
-            question: "Have you reserved your spot in a VAULT-TEC vault?",
+            question: "Have you reserved a VAULT-TEC vault?",
             answer: "> Yes! I'm prepared for total nuclear annhialation!",
             wrong1: "> No! I do not value my safety!",
-            wrong2: "> No! My families security is worthless!",
+            wrong2: "> No! My family's security is worthless!",
             wrong3: "> No! I am incompetent!",
         }   
     }
