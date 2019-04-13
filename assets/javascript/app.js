@@ -23,7 +23,7 @@ $(document).ready(function() {
             wrong3: ">  VAULT-TEC proproetary protection product",
         },
         '2' : {
-            question: "Select your best defense from post-nuclear fallout.",
+            question: "Select your best defense from post-nuclear fallout",
             answer: "> VAULT-TEC vault",
             wrong1: "> local grocery store",
             wrong2: "> basement",
@@ -51,8 +51,8 @@ $(document).ready(function() {
             wrong3: "> No! I am incompetent!",
         }   
     }
-    //click to start
-    login()
+
+    login() // greeting screen
 
     function login() {
         question.text('VAULT-TEC Post-Annihalation Apptitude Test').addClass('typewriter').appendTo(question)
@@ -63,7 +63,7 @@ $(document).ready(function() {
             answer4Div.removeClass('hidden').text(' > ready - click anywhere to begin <'); 
             $(document).one().click(function() {  
                 question.removeClass('typewriter')
-                setTimeout(function() {start()}, 1000)
+                setTimeout(function() {start()}, 1000) // begin game on click
             })}, 6500)
         
         
@@ -71,8 +71,8 @@ $(document).ready(function() {
 
     function start() {
 
-        dump()
-        answer.addClass('hidden')
+        dump() // clear div
+        answer.addClass('hidden') // hide answers for animation
         
         q=1
         $(document).off('click') // click to start off on start
@@ -110,32 +110,32 @@ $(document).ready(function() {
                 wrongArr = [questionAnswer[q].wrong1, questionAnswer[q].wrong2, questionAnswer[q].wrong3] // array holding the 3 wrong answers for the setUp() function
                 optionDisplayArr[i].text(wrongArr[w])    // if the div is empty, it gets the first wrong answer stored in the object
                 w++                                      // and then we increment to the next wrong answer
+            }
         }
-    }
 
-    // on click function for selection
-    answer.one().click(function() {
-        answer.off('click')// when clicked, click selectors turn off
-        question.removeClass('typewriter')// remove effect
-        if ($(event.target).text() === correctAnswer.text()) { // if it's the correct answer
-            display.text('CORRECT') // display correct
-            $(event.target).addClass('answerRight')
-            console.log('right') // alert
-            right++ // counter
-            q++ // question #
-            clearInterval(timer) // timer pause
-            setTimeout(function() {softReset()} , 2000) // question reset
-        } else { // if its not right
-            display.text('WRONG') // display wrong
-            $(event.target).addClass('answerWrong') // highlight ref
-            console.log('wrong')// alert
-            wrong++ // counter
-            q++ // question #
-            clearInterval(timer)// timer pause
-            setTimeout(function() {softReset()} , 2000) // question reset
-        }
-    })
-}
+        // on click function for selection
+        answer.one().click(function() {
+            answer.off('click')// when clicked, click selectors turn off
+            question.removeClass('typewriter')// remove effect
+            if ($(event.target).text() === correctAnswer.text()) { // if it's the correct answer
+                display.text('CORRECT') // display correct
+                $(event.target).addClass('answerRight')
+                console.log('right') // alert
+                right++ // counter
+                q++ // question #
+                clearInterval(timer) // timer pause
+                setTimeout(function() {softReset()} , 2000) // question reset
+            } else { // if its not right
+                display.text('WRONG') // display wrong
+                $(event.target).addClass('answerWrong') // highlight ref
+                console.log('wrong')// alert
+                wrong++ // counter
+                q++ // question #
+                clearInterval(timer)// timer pause
+                setTimeout(function() {softReset()} , 2000) // question reset
+            }
+        })
+    }
 
     //timer
     function timerFunc() {
@@ -215,7 +215,7 @@ $(document).ready(function() {
         setTimeout(function() {start()}, 1000)
     }
 
-    function lockOut() {
+    function lockOut() { // if N is selected post game
         dump()
         $('<div>').text('---- USER LOCKOUT ----').appendTo(question);
         $('<div>').text('please contact an administrator').appendTo(answer1Div);
